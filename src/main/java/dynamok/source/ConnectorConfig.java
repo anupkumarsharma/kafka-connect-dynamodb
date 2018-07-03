@@ -38,7 +38,6 @@ class ConnectorConfig extends AbstractConfig {
         static final String TABLES_WHITELIST = "tables.whitelist";
         static final String TABLES_BLACKLIST = "tables.blacklist";
         static final String TOPIC_FORMAT = "topic.format";
-        static final String LOG_RECORD_STREAM= "log.record.stream";
     }
 
     static final ConfigDef CONFIG_DEF = new ConfigDef()
@@ -60,9 +59,7 @@ class ConnectorConfig extends AbstractConfig {
             .define(Keys.TABLES_BLACKLIST, ConfigDef.Type.LIST, Collections.emptyList(),
                     ConfigDef.Importance.MEDIUM, "Blacklist for DynamoDB tables to source from.")
             .define(Keys.TOPIC_FORMAT, ConfigDef.Type.STRING, "${table}",
-                    ConfigDef.Importance.HIGH, "Format string for destination Kafka topic, use ``${table}`` as placeholder for source table name.")
-            .define(Keys.LOG_RECORD_STREAM,ConfigDef.Type.STRING, "false",
-                    ConfigDef.Importance.LOW,"Enable record level logging of Dynamo stream.");
+                    ConfigDef.Importance.HIGH, "Format string for destination Kafka topic, use ``${table}`` as placeholder for source table name.");
 
     final Regions region;
     final Password accessKeyId;
@@ -71,7 +68,6 @@ class ConnectorConfig extends AbstractConfig {
     final String tablesPrefix;
     final List<String> tablesWhitelist;
     final List<String> tablesBlacklist;
-    final String isRecordStreamLogOn;
 
     ConnectorConfig(Map<String, String> props) {
         super(CONFIG_DEF, props);
@@ -82,7 +78,6 @@ class ConnectorConfig extends AbstractConfig {
         tablesWhitelist = getList(Keys.TABLES_WHITELIST);
         tablesBlacklist = getList(Keys.TABLES_BLACKLIST);
         topicFormat = getString(Keys.TOPIC_FORMAT);
-        isRecordStreamLogOn = getString(Keys.LOG_RECORD_STREAM);
     }
 
     public static void main(String... args) {
