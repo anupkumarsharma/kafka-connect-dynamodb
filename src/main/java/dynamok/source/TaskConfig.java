@@ -36,7 +36,6 @@ class TaskConfig {
         static String SHARDS = "shards";
         static String TABLE = "table";
         static String STREAM_ARN = "stream.arn";
-        static String LOG_RECORD_STREAM= "log.record.stream";
     }
 
     private final Map<String, String> props;
@@ -46,7 +45,7 @@ class TaskConfig {
     final String secretKey;
     final String topicFormat;
     final List<String> shards;
-    final Boolean isRecordStreamLogOn;
+
     TaskConfig(Map<String, String> props) {
         this.props = props;
 
@@ -55,7 +54,6 @@ class TaskConfig {
         secretKey = getValue(Keys.SECRET_KEY, "");
         topicFormat = getValue(Keys.TOPIC_FORMAT);
         shards = Arrays.stream(getValue(Keys.SHARDS).split(",")).filter(shardId -> !shardId.isEmpty()).collect(Collectors.toList());
-        isRecordStreamLogOn = Boolean.valueOf(getValue(Keys.LOG_RECORD_STREAM));
     }
 
     String tableForShard(String shardId) {
